@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>記録帳アプリ</title>
+</head>
+
+<body>
+
+    <h1>記録帳</h1>
+
+    <label for="title">タイトル</label><br>
+    <input type="text" id="title" placeholder="タイトルを入力"><br><br>
+
+    <label for="category">カテゴリ</label><br>
+    <input type="text" id="category" placeholder="カテゴリ名を入力"><br><br>
+
+    <label for="date">日付</label><br>
+    <input type="date" id="date"><br><br>
+
+    <label for="memo">メモ</label><br>
+    <textarea id="memo" rows="5" cols="40" placeholder="内容を入力"></textarea><br><br>
+
+    <label for="hour">作業時間</label><br>
+
+    <input type="number" id="hour" min="0" placeholder="時間">
+    時間
+
+    <input type="number" id="minute" min="0" max="59" placeholder="分">
+    分
+
+    <br><br>
+
+    <button id="save-btn">保存</button>
+
+    <h2>記録一覧</h2>
+    <div id="record-list">
+        <p id="empty-message">まだ記録はありません</p>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
