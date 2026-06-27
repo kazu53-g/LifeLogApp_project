@@ -1,6 +1,6 @@
 // ① ローカルストレージからデータ取得
 let records = JSON.parse(localStorage.getItem("records")) || [];
-
+let editIndex = null;
 // ② DOM取得
 const saveBtn = document.getElementById("save-btn");
 const recordList = document.getElementById("record-list");
@@ -12,7 +12,18 @@ const memoInput = document.getElementById("memo");
 const hourInput = document.getElementById("hour");
 const minuteInput = document.getElementById("minute");
 
-// ③ 表示関数
+// 編集画面
+function updateEditStateUI() {
+    if (editIndex !== null) {
+        saveBtn.textContent = "上書き保存";
+        document.getElementById("status").textContent = "編集中";
+    } else {
+        saveBtn.textContent = "新規保存";
+        document.getElementById("status").textContent = "";
+    }
+}
+
+// ③ 記録一覧表示
 function renderRecords() {
     recordList.innerHTML = "";
 
@@ -30,6 +41,7 @@ function renderRecords() {
                 <p>メモ：${r.memo}</p>
                 <p>作業時間：${r.hour}時間${r.minute}分</p>
                 <button onclick="deleteRecord(${index})">削除</button>
+                <button onclick="editRecord(${index})">編集</button>
                 <hr>
             </div>
         `;
@@ -43,7 +55,17 @@ function deleteRecord(index) {
     renderRecords();
 }
 
-
+//編集機能
+function editRecord(index) {
+    titleInput.value = records[index].title;
+    categoryInput.value = records[index].category;
+    dateInput.value = records[index].date;
+    memoInput.value = records[index].memo;
+    hourInput.value = records[index].hour;
+    minuteInput.value = records[index].minute;
+    editIndex = index;
+    updateEditStateUI();
+}
 
 // ⑤ 初期表示
 renderRecords();
@@ -61,9 +83,21 @@ saveBtn.addEventListener("click", function () {
 
     if (record.title === "") return;
 
-    records.push(record);
-    localStorage.setItem("records", JSON.stringify(records));
+    if (editIndex !== null) {
+        records[editIndex].title = titleInput.value;
+        records[editIndex].category = categoryInput.value;
+        records[editIndex].date = dateInput.value;
+        records[editIndex].memo = memoInput.value;
+        records[editIndex].hour = Number(hourInput.value);
+        records[editIndex].minute = Number(minuteInput.value);
+        localStorage.setItem("records", JSON.stringify(records));
+        editIndex = null;
+    } else {
+        records.push(record);
+        localStorage.setItem("records", JSON.stringify(records));
+    }
 
+    updateEditStateUI();
     renderRecords();
 
     titleInput.value = "";
@@ -72,4 +106,5 @@ saveBtn.addEventListener("click", function () {
     memoInput.value = "";
     hourInput.value = "";
     minuteInput.value = "";
+
 });
