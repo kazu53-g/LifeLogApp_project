@@ -1,7 +1,8 @@
-// ① ローカルストレージからデータ取得
+// データ取得
 let records = JSON.parse(localStorage.getItem("records")) || [];
 let editIndex = null;
-// ② DOM取得
+
+// DOM取得
 const saveBtn = document.getElementById("save-btn");
 const recordList = document.getElementById("record-list");
 
@@ -12,7 +13,11 @@ const memoInput = document.getElementById("memo");
 const hourInput = document.getElementById("hour");
 const minuteInput = document.getElementById("minute");
 
-// 編集画面
+const menuToggle = document.querySelector(".menu-toggle");
+const logSection = document.querySelector(".log-section");
+const nav = document.querySelector("nav");
+
+// 編集UI更新
 function updateEditStateUI() {
     if (editIndex !== null) {
         saveBtn.textContent = "上書き保存";
@@ -23,12 +28,12 @@ function updateEditStateUI() {
     }
 }
 
-// ③ 記録一覧表示
+// 記録表示
 function renderRecords() {
     recordList.innerHTML = "";
 
     if (records.length === 0) {
-        recordList.innerHTML = `<p id="empty-message">まだ記録はありません</p>`;
+        recordList.innerHTML = `<p>まだ記録はありません</p>`;
         return;
     }
 
@@ -48,14 +53,14 @@ function renderRecords() {
     });
 }
 
-// ④ 削除機能
+// 削除
 function deleteRecord(index) {
     records.splice(index, 1);
     localStorage.setItem("records", JSON.stringify(records));
     renderRecords();
 }
 
-//編集機能
+// 編集
 function editRecord(index) {
     titleInput.value = records[index].title;
     categoryInput.value = records[index].category;
@@ -63,15 +68,19 @@ function editRecord(index) {
     memoInput.value = records[index].memo;
     hourInput.value = records[index].hour;
     minuteInput.value = records[index].minute;
+
     editIndex = index;
     updateEditStateUI();
+
+    logSection.classList.remove("on");
 }
 
-// ⑤ 初期表示
+// 初期表示
 renderRecords();
 
-// ⑥ 保存処理
+// 保存
 saveBtn.addEventListener("click", function () {
+
     const record = {
         title: titleInput.value,
         category: categoryInput.value,
@@ -84,18 +93,13 @@ saveBtn.addEventListener("click", function () {
     if (record.title === "") return;
 
     if (editIndex !== null) {
-        records[editIndex].title = titleInput.value;
-        records[editIndex].category = categoryInput.value;
-        records[editIndex].date = dateInput.value;
-        records[editIndex].memo = memoInput.value;
-        records[editIndex].hour = Number(hourInput.value);
-        records[editIndex].minute = Number(minuteInput.value);
-        localStorage.setItem("records", JSON.stringify(records));
+        records[editIndex] = record;
         editIndex = null;
     } else {
         records.push(record);
-        localStorage.setItem("records", JSON.stringify(records));
     }
+
+    localStorage.setItem("records", JSON.stringify(records));
 
     updateEditStateUI();
     renderRecords();
@@ -106,5 +110,11 @@ saveBtn.addEventListener("click", function () {
     memoInput.value = "";
     hourInput.value = "";
     minuteInput.value = "";
+});
 
+// ハンバーガー開閉
+menuToggle.addEventListener("click", function () {
+    this.classList.toggle("on");
+    logSection.classList.toggle("on");
+    nav.classList.toggle("hidden");
 });

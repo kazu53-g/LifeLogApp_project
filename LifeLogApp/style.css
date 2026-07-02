@@ -1,3 +1,23 @@
 body {
+    max-width: 600px;
+    margin: 20px auto;
     font-family: sans-serif;
+    background-color: aliceblue;
+}
+
+h1,
+h2 {
+    text-align: center;
+}
+
+.log-input {
+    background-color: whitesmoke;
+    border: 1px solid#ccc;
+    padding: 20px;
+}
+
+#record-list {
+    border: 1px solid#ccc;
+    border-radius: 8px;
+    padding: 20px
 }
