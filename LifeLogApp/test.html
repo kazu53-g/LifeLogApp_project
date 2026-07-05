@@ -4,53 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <title>記録帳アプリ</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts（綺麗なフォント）の読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- CSSファイル -->
+    <link rel="stylesheet" href="test.css">
 </head>
 
 <body>
 
-    <h1>記録帳（テスト）</h1>
+    <header class="app-header">
+        <h1>記録帳（テスト）</h1>
+    </header>
 
-    <h2 id="status" style="color: red"></h2>
-    <div class="log-input">
-        <label for="title">タイトル</label><br>
-        <input type="text" id="title" placeholder="タイトルを入力"><br><br>
+    <!-- 編集中バッジ（空の時はCSSで自動非表示） -->
+    <h2 id="status" class="editing-badge"></h2>
 
-        <label for="category">カテゴリ</label><br>
-        <input type="text" id="category" placeholder="カテゴリ名を入力"><br><br>
-
-        <label for="date">日付</label><br>
-        <input type="date" id="date"><br><br>
-
-        <label for="memo">メモ</label><br>
-        <textarea id="memo" rows="5" cols="40" placeholder="内容を入力"></textarea><br><br>
-
-        <label for="hour">作業時間</label><br>
-
-        <input type="number" id="hour" min="0" value="0"> 時間
-        <input type="number" id="minute" min="0" max="59" value="0"> 分
-
-        <br><br>
-
-        <button id="save-btn">新規保存</button>
-    </div>
-    <hr>
-
-    <div class="log-section">
-        <div class="menu-toggle">
-            <div class="one"></div>
-            <div class="two"></div>
-            <div class="three"></div>
+    <!-- 入力フォームエリア -->
+    <div class="log-input container">
+        <div class="form-group">
+            <label for="title">タイトル</label>
+            <input type="text" id="title" placeholder="タイトルを入力">
         </div>
 
-        <nav class="hidden">
-            <h2>記録一覧</h2>
-            <div id="record-list">
-                <p id="empty-message">まだ記録はありません</p>
+        <div class="form-group">
+            <label for="category">カテゴリ</label>
+            <input type="text" id="category" placeholder="カテゴリ名を入力">
+        </div>
+
+        <div class="form-group">
+            <label for="date">日付</label>
+            <input type="date" id="date">
+        </div>
+
+        <div class="form-group">
+            <label for="memo">メモ</label>
+            <textarea id="memo" rows="5" placeholder="内容を入力"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="hour">作業時間</label>
+            <div class="time-input-container">
+                <input type="number" id="hour" min="0" value="0">
+                <span class="unit">時間</span>
+                <input type="number" id="minute" min="0" max="59" value="0">
+                <span class="unit">分</span>
             </div>
-        </nav>
+        </div>
+
+        <button id="save-btn" class="save-btn">新規保存</button>
     </div>
-    <!-- <script src="script.js"></script> -->
+
+    <!-- 記録一覧エリア -->
+    <div class="log-section container">
+        <h2>記録一覧</h2>
+        <div id="record-list">
+            <p id="empty-message">まだ記録はありません</p>
+        </div>
+    </div>
+
+    <!-- JavaScriptファイル -->
     <script src="test.js"></script>
 
 </body>
